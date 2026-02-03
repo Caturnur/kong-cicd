@@ -8,7 +8,7 @@ pipeline {
         stage('Convert to Open API') {
             steps {
                 sh 'mkdir -p .out'
-                sh 'deck file openapi2kong --spec ./oas/service-books.yaml --output-file ./.out/service-books-kong.yaml'
+                sh 'deck file openapi2kong --spec ./oas/book_spec.yaml --output-file ./.out/service-books-kong.yaml'
             }
         }
         stage('Deploy Gateway') {
