@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    environment {
+        ENV = 'dev'
+        WORKSPACE = 'demo'
+    }
+    stages {
+        stage('Convert to Open API') {
+            steps {
+                sh 'mkdir -p .out'
+                sh 'deck file openapi2kong --spec ./oas/service-books.yaml --output-file ./.out/service-books-kong.yaml'
+            }
+        }
+        stage('Deploy Gateway') {
+            steps {
+                sh 'deck gateway sync --workspace ${WORKSPACE} ./.out/service-books-kong.yaml --config ./config/auth-${ENV}.yaml'
+            }
+        }
+        stage('Clean Up') {
+            steps {
+                sh 'rm -fr ./out/*'
+            }
+        }
+    }
+}
+
