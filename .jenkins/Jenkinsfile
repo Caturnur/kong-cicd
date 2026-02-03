@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Deploy Gateway') {
             steps {
-                sh 'deck gateway sync --workspace ${WORKSPACE} ./.out/service-books-kong.yaml --config ./config/auth-${ENV}.yaml'
+                sh 'deck gateway sync ./.out/service-books-kong.yaml --config ./config/auth-${ENV}.yaml'
             }
         }
         stage('Clean Up') {
